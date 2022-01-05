@@ -5,7 +5,6 @@ export default function GridSquare(props) {
   const [marker, setMarker] = useState("")
 
   const handleClick = () => {
-    console.log("Clicked square")
     setMarker(props.player === "Player 1" ? "X" : "O")
     props.handleClick()
   }
