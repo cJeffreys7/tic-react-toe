@@ -40,11 +40,10 @@ export default function Grid() {
     }))
   }, [resetCount])
 
-  if (!win && gridSpaces.every(grid => grid.marker)) {
-    messageModal = <ActionModal open={win} title="Cats Cradle!" text={`It's a tie!`} buttonText="Play Again?" handleClick={resetBoard}/>
-  }
   if (win) {
     messageModal = <ActionModal open={win} title="You Win!" text={`Congrats ${player}, you won!`} buttonText="Play Again?" handleClick={resetBoard}/>
+  } else if (gridSpaces.every(grid => grid.marker)) {
+    messageModal = <ActionModal open={true} title="Cats Cradle!" text={`It's a tie!`} buttonText="Play Again?" handleClick={resetBoard}/>
   }
 
   return (
