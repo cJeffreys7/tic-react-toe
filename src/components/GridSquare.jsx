@@ -6,7 +6,8 @@ export default function GridSquare(props) {
 
   const handleClick = () => {
     setMarker(props.player === "Player 1" ? "X" : "O")
-    props.handleClick()
+    console.log('Props Index:', props.index)
+    props.handleClick(props.index)
   }
 
   return (

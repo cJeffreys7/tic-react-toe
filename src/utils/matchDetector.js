@@ -40,7 +40,8 @@ export function detectMatch(grid, currentLocation, player1, totalRows, totalColu
       directionOrientation: [-1, -1]
     }
   ]
-  let currMatchDir = null
+  let currentMatchDir = null
+  const currentPosition = [currentLocation % totalColumns, Math.floor(currentLocation/totalRows)]
 
   // Search each square next to the currentLocation, and if a similar marker is found, set the currMatchDir
   // Then search in that orientation until either another match is found or reaches the edge of the board
@@ -53,11 +54,13 @@ export function detectMatch(grid, currentLocation, player1, totalRows, totalColu
   // Convert to grid location (row * gridColumns + column)
 
   for (let i = 0; i < 9; i++) {
-    const currDirection = matchDir[i].directionOrientation
-    console.log(`Searching for grid index ${currentLocation + currDirection[0] + currDirection[1] * totalColumns}`)
-    if (grid[currentLocation + currDirection[0] + currDirection[1] * totalColumns] && grid[currentLocation + currDirection[0] + currDirection[1] * totalColumns].marker === player1 ? "Player 1" : "Player 2") {
-      currMatchDir = matchDir[i].directionName
-      console.log(`Found a match in the ${currDirection} direction. Now looking for more matches in the ${currMatchDir} direction.`)
+    const currDirection = matchDir[i]?.directionOrientation
+    const adjacentGridSpace = [currentPosition[0] + matchDir[i].directionOrientation[0], currentPosition[1] + matchDir[i].directionOrientation[1]]
+    
+    console.log(`Searching for grid index ${currentLocation + currDirection[0] + currDirection[1] * totalColumns}: ${adjacentGridSpace[0] < totalColumns && adjacentGridSpace[1] < totalRows ? `Valid adjacent grid space: ${adjacentGridSpace}` : "Invalid adjacent grid space"}`)
+    if ((adjacentGridSpace[0] < totalColumns && adjacentGridSpace[1] < totalRows) && grid[currentLocation + currDirection[0] + currDirection[1] * totalColumns].marker === (player1 ? 1 : 2)) {
+      currentMatchDir = matchDir[i].directionName
+      console.log(`Found a match in the ${currDirection} direction. Now looking for more matches in the ${currentMatchDir} direction.`)
     }
   }
 }
