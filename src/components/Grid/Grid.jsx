@@ -12,17 +12,21 @@ export default function Grid() {
 
   const rows = 3
   const columns = 3
+  let messageModal = ""
 
   const handleClick = (index) => {
     if (!win) {
       setGridSpaces(gridSpaces.map((grid, gridIndex) => gridIndex === index ? { index: gridIndex, marker: player === "Player 1" ? 1 : 2 } : grid ))
       searchForMatch(index)
     }
-    setPlayer(player === "Player 1" ? "Player 2" : "Player 1")
   }
 
   const searchForMatch = (index) => {
-    setWin(detectMatch(gridSpaces, parseInt(index), player === "Player 1", rows, columns))
+    if (detectMatch(gridSpaces, parseInt(index), player === "Player 1", rows, columns)) {
+      setWin(true)
+    } else {
+      setPlayer(player === "Player 1" ? "Player 2" : "Player 1")
+    }
   }
 
   const resetBoard = () => {
@@ -36,6 +40,13 @@ export default function Grid() {
     }))
   }, [resetCount])
 
+  if (!win && gridSpaces.every(grid => grid.marker)) {
+    messageModal = <ActionModal open={win} title="Cats Cradle!" text={`It's a tie!`} buttonText="Play Again?" handleClick={resetBoard}/>
+  }
+  if (win) {
+    messageModal = <ActionModal open={win} title="You Win!" text={`Congrats ${player}, you won!`} buttonText="Play Again?" handleClick={resetBoard}/>
+  }
+
   return (
     <div className={styles.gridSpace}>
       {gridSpaces?.map((grid, i) => 
@@ -46,7 +57,7 @@ export default function Grid() {
           marker={grid.marker} 
           key={i}
         />)}
-      <ActionModal open={win} title="You Win!" text={`Congrats ${player === "Player 1" ? "Player 2" : "Player 1"}, you have won!`} buttonText="Play Again?" handleClick={resetBoard}/>
+      {messageModal}
     </div>
   )
 }
