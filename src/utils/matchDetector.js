@@ -50,9 +50,8 @@ export function detectMatch(grid, currentLocation, player1, totalRows, totalColu
   // Then search in the oposite orientation until either another match is found or reaches the edge of the board
   // If there is not 3 in a row, resume searching each square next to the currrentLocation
 
-  // console.log(`Searching for ${matchMarker} markers.`)
-  for (let i = 0; i < 9; i++) {
-    let currentSearchDirection = matchDir[i]?.directionOrientation
+  for (let i = 0; i < 8; i++) {
+    let currentSearchDirection = matchDir[i].directionOrientation
     let adjacentGridSpace = [currentPosition[0] + currentSearchDirection[0], currentPosition[1] + currentSearchDirection[1]]
     // console.log(`Searching for grid index ${currentLocation + currentSearchDirection[0] + currentSearchDirection[1] * totalColumns}: ${validGridSpace(adjacentGridSpace, totalRows, totalColumns) ? `Valid adjacent grid space: ${adjacentGridSpace}` : "Invalid adjacent grid space"}`)
     if (validGridSpace(adjacentGridSpace, totalRows, totalColumns) && grid[currentLocation + currentSearchDirection[0] + currentSearchDirection[1] * totalColumns].marker === matchMarker) {
