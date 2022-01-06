@@ -1,4 +1,4 @@
-// Receives an array with values 0 (no marker), 1 (player 1 marker), and 2 (player 2 marker)
+// Receives an array with values null (no marker), 1 (player 1 marker), and 2 (player 2 marker)
 // Receives an int for index of clicked square
 // Receives a bool for player 1 (true) or player 2 (false)
 // Receives an int for row count
@@ -40,7 +40,7 @@ export function detectMatch(grid, currentLocation, player1, totalRows, totalColu
       directionOrientation: [-1, -1]
     }
   ]
-  let currentMatchDirection = null
+  // let currentMatchDirection = null
   let currentMatchCount = 0
   const matchMarker = player1 ? 1 : 2
   const currentPosition = [currentLocation % totalColumns, Math.floor(currentLocation/totalRows)]
@@ -53,32 +53,32 @@ export function detectMatch(grid, currentLocation, player1, totalRows, totalColu
   for (let i = 0; i < 8; i++) {
     let currentSearchDirection = matchDir[i].directionOrientation
     let adjacentGridSpace = [currentPosition[0] + currentSearchDirection[0], currentPosition[1] + currentSearchDirection[1]]
-    console.log(`Searching for grid index ${currentLocation + currentSearchDirection[0] + currentSearchDirection[1] * totalColumns}: ${validGridSpace(adjacentGridSpace, totalRows, totalColumns) ? `Valid adjacent grid space: ${adjacentGridSpace}` : "Invalid adjacent grid space"}`)
+    // console.log(`Searching for grid index ${currentLocation + currentSearchDirection[0] + currentSearchDirection[1] * totalColumns}: ${validGridSpace(adjacentGridSpace, totalRows, totalColumns) ? `Valid adjacent grid space: ${adjacentGridSpace}` : "Invalid adjacent grid space"}`)
     if (validGridSpace(adjacentGridSpace, totalRows, totalColumns) && grid[currentLocation + currentSearchDirection[0] + currentSearchDirection[1] * totalColumns].marker === matchMarker) {
       // Found first adjacent match
-      currentMatchDirection = matchDir[i].directionName
+      // currentMatchDirection = matchDir[i].directionName
       do {
         currentMatchCount++
-        console.log(`Found a match at ${adjacentGridSpace}. Grid Marker is ${grid[adjacentGridSpace[0] + adjacentGridSpace[1] * totalColumns].marker} which ${grid[adjacentGridSpace[0] + adjacentGridSpace[1] * totalColumns].marker === matchMarker ? "matches" : "does not match"} the player's marker, ${matchMarker}. Now looking for more matches in the ${currentMatchDirection} direction.`)
+        // console.log(`Found a match at ${adjacentGridSpace}. Grid Marker is ${grid[adjacentGridSpace[0] + adjacentGridSpace[1] * totalColumns].marker} which ${grid[adjacentGridSpace[0] + adjacentGridSpace[1] * totalColumns].marker === matchMarker ? "matches" : "does not match"} the player's marker, ${matchMarker}. Now looking for more matches in the ${currentMatchDirection} direction.`)
         adjacentGridSpace = [adjacentGridSpace[0] + currentSearchDirection[0], adjacentGridSpace[1] + currentSearchDirection[1]]
       } while (validGridSpace(adjacentGridSpace, totalRows, totalColumns) && grid[adjacentGridSpace[0] + adjacentGridSpace[1] * totalColumns].marker === matchMarker)
-      console.log(`Cannot search more in the ${currentMatchDirection} direction.`)
+      // console.log(`Cannot search more in the ${currentMatchDirection} direction.`)
       // Search opposite direction in case there are additional matches
       currentSearchDirection = matchDir[i + 4 < matchDir.length ? i + 4 : i - 4].directionOrientation
-      currentMatchDirection = matchDir[i + 4 < matchDir.length ? i + 4 : i - 4].directionName
-      console.log(`Attempting search in the ${currentMatchDirection} direction.`)
+      // currentMatchDirection = matchDir[i + 4 < matchDir.length ? i + 4 : i - 4].directionName
+      // console.log(`Attempting search in the ${currentMatchDirection} direction.`)
       adjacentGridSpace = [currentPosition[0] + currentSearchDirection[0], currentPosition[1] + currentSearchDirection[1]]
       if (validGridSpace(adjacentGridSpace, totalRows, totalColumns) && grid[adjacentGridSpace[0] + adjacentGridSpace[1] * totalColumns].marker === matchMarker) {
         do {
           currentMatchCount++
-          console.log(`Found a match at ${adjacentGridSpace}. Grid Marker is ${grid[adjacentGridSpace[0] + adjacentGridSpace[1] * totalColumns].marker} which ${grid[adjacentGridSpace[0] + adjacentGridSpace[1] * totalColumns].marker === matchMarker ? "matches" : "does not match"} the player's marker, ${matchMarker}. Now looking for more matches in the ${currentMatchDirection} direction.`)
+          // console.log(`Found a match at ${adjacentGridSpace}. Grid Marker is ${grid[adjacentGridSpace[0] + adjacentGridSpace[1] * totalColumns].marker} which ${grid[adjacentGridSpace[0] + adjacentGridSpace[1] * totalColumns].marker === matchMarker ? "matches" : "does not match"} the player's marker, ${matchMarker}. Now looking for more matches in the ${currentMatchDirection} direction.`)
           adjacentGridSpace = [adjacentGridSpace[0] + currentSearchDirection[0], adjacentGridSpace[1] + currentSearchDirection[1]]
         } while (validGridSpace(adjacentGridSpace, totalRows, totalColumns) && grid[adjacentGridSpace[0] + adjacentGridSpace[1] * totalColumns].marker === matchMarker)
       }
-      console.log(`Cannot search more in the ${currentMatchDirection} direction.`)
+      // console.log(`Cannot search more in the ${currentMatchDirection} direction.`)
     }
     currentMatchCount = currentMatchCount > 0 ? currentMatchCount + 1 : 0
-    console.log(`Found ${currentMatchCount} match${currentMatchCount === 1 ? "" : "es"}`)
+    // console.log(`Found ${currentMatchCount} match${currentMatchCount === 1 ? "" : "es"}`)
     if (currentMatchCount >= 3) {
       return true
     }
