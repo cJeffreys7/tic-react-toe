@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import GridSquare from './GridSquare'
 import styles from './Grid.module.css'
-import { detectMatch } from '../utils/matchDetector'
+import { detectMatch } from '../../utils/matchDetector'
 
 export default function Grid() {
   const [player, setPlayer] = useState("Player 1")
@@ -32,8 +32,6 @@ export default function Grid() {
     }))
 
   }, [])
-
-  // console.log('Mapped grid:', gridSpaces)
 
   return (
     <div className={styles.gridSpace}>
